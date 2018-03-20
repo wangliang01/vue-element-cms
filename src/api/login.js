@@ -11,7 +11,7 @@ export function loginByAccount(account, password) {
 		password
 	}
 
-	console.log('请求url: ' +urlconfig.baseUrl + urlData.loginUrl)
+	console.log('请求url: ' + urlconfig.baseUrl + urlData.loginUrl)
 	return service({
 		url: urlconfig.baseUrl + urlData.loginUrl,
 		method: 'post',

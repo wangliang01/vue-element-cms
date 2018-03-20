@@ -6,12 +6,14 @@
 		<el-form-item label="密码：" prop="password">
     	<el-input v-model="loginForm.password" :type="pwdType" @keyup.enter.native="handleLogin" auto-complete="off"></el-input>
   	</el-form-item>
-		<el-button type="primary" class="login-btn" @click.native="handleLogin">登 录</el-button>
+		<el-button type="primary" class="login-btn" @click.native="handleLogin" :loading="loading">登 录</el-button>
 	</el-form>
 </template>
 <script>
 	import {isvalidAccount} from 'utils/validate'
-	import {loginByAccount} from 'api/login'
+	import NProgress from 'nprogress'
+
+	console.log(NProgress)
 	export default {
 		data() {
 			const validateAccount = (rule, value, callback) => {
@@ -30,29 +32,30 @@
 	    }
 			return {
 				loginForm: {
-					account: '',
-					password: ''
+					account: 'admin',
+					password: '123456'
 				},
 				loginRules: {
 	        account: [{ required: true, trigger: 'blur', validator: validateAccount }],
 	        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       	},
-      	pwdType: 'password'
+      	pwdType: 'password',
+      	loading: false
 			}
 		},
 		methods: {
 			handleLogin() {
-				let that = this
 				this.$refs.loginForm.validate(valid => {
 					if (valid) {
-						// 发送接口
-						return new Promise((resolve, reject) => {
-							loginByAccount(that.loginForm.account, that.loginForm.password).then(res => {
-									const data = res.data
-									console.log(data)
-							}).catch(error => {
-							reject(error)
-							})
+						this.loading = true
+						NProgress.start()
+						this.$store.dispatch('loginByUserName', this.loginForm).then(res => {
+								this.loading = false
+								NProgress.done()
+								console.log(res)
+						}).catch(() => {
+							this.loading = false
+							NProgress.done()
 						})
 					} else {
 						console.log('error submit')

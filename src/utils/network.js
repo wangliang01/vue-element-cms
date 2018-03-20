@@ -9,7 +9,6 @@ const service = axios.create({
 	timeout: 5000 // 请求超时时间
 })
 
-
 // request拦截器
 service.interceptors.request.use(config => {
 	let token = getToken()
@@ -23,7 +22,6 @@ service.interceptors.request.use(config => {
 	console.log(error)
 	Promise.reject(error)
 })
-
 
 // response拦截器
 service.interceptors.response.use(
@@ -40,6 +38,5 @@ service.interceptors.response.use(
 		})
 	}
 )
-
 
 export default service

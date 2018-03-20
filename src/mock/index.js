@@ -6,6 +6,6 @@ Mock.setup({
 })
 
 // 登录相关
-Mock.mock(/\api\/login\/login/, 'post', loginAPI.loginByAccount)
+Mock.mock(/\/api\/login\/login/, 'post', loginAPI.loginByAccount)
 
 export default Mock

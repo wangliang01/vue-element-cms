@@ -6,13 +6,21 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'src/mock/index'
+import store from './store'
+
+// 引入nprogress
+import 'jquery/dist/jquery.min.js'
+import 'nprogress/nprogress.js'
+import 'nprogress/nprogress.css'
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 
+console.log(store)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
