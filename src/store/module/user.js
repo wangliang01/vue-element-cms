@@ -47,13 +47,16 @@ const user = {
 			console.log('userInfo')
 			console.log(userInfo)
 			let username = userInfo.account.trim()
-			return new Promise((resolve, reject) => {
-				loginByAccount(username, userInfo.password).then(res => {
-					resolve()
+			// return new Promise((resolve, reject) => {
+			return loginByAccount(username, userInfo.password).then(res => {
+					let data = res.data
+					setToken(data.token)
+					commit('SET_TOKEN', data.token)
+					return Promise.resolve(123)
 				}).catch(error => {
-					reject(error)
+					console.error(error)
 				}) 
-			})
+			// })
 		} 
 
 	}
